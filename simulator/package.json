@@ -1,0 +1,10 @@
+{
+    "name": "weather-simulator",
+    "version": "1.0.0",
+    "main": "weather_stream_simulator.js",
+    "dependencies": {
+      "ws": "^8.0.0",
+      "node-fetch": "^2.6.1"
+    }
+  }
+  
