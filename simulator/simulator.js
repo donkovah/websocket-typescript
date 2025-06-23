@@ -24,12 +24,12 @@ wss.on("connection", (ws) => {
     const [lat, lon] = cities[city];
 
     try {
-      // const response = await fetch(
-      //   `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`
-      // );
-      // const data = await response.json();
-      // const weather = data.current_weather;generateFakeWeatherEvent
-      const weather = generateFakeWeatherEvent();
+      const response = await fetch(
+        `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`
+      );
+      const data = await response.json();
+      const weather = data.current_weather;generateFakeWeatherEvent
+      // const weather = generateFakeWeatherEvent();
 
       if (weather) {
         const event = {
