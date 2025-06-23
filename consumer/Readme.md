@@ -13,20 +13,13 @@ The Climate Consumer Backend is a service that consumes weather events via WebSo
 
 ## Installation
 
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/your-repo/climate-consumer-backend.git
-   cd climate-consumer-backend
-   ```
-
-2. Install dependencies:
+1. Install dependencies:
 
    ```bash
    yarn install
    ```
 
-3. Set environment variables in a .env file (see Configuration section).
+2. Set environment variables in a .env file (see Configuration section).
 
 ## Scripts
 
