@@ -23,14 +23,18 @@ The project uses Docker for containerization and includes an in-memory store for
 
 ### Simulator
 - **WebSocket Server**: Simulates weather events such as temperature, wind speed, and direction.
+- **Real-Time Weather Data**: Fetches live weather data from Open-Meteo API.
+- **Fallback to Fake Events**: Generates fake weather events when API calls fail.
 - **Customizable Event Frequency**: Allows configuration of event generation intervals.
 - **Dockerized**: Easily deployable using Docker.
 
 ### Frontend
 - **Real-Time Visualization**: Displays candlestick data in charts.
 - **Responsive Design**: Optimized for desktop and mobile devices.
-- **React-Based**: Built with modern React and TypeScript.
+- **React + TypeScript**: Built with modern React and TypeScript for type safety.
 - **Integration with Consumer API**: Fetches and visualizes data from the backend.
+- **Custom Hooks**: Includes reusable hooks like `useCandlestickData` for fetching and managing data.
+- **Dockerized**: Easily deployable using Docker.
 
 ---
 
@@ -162,23 +166,43 @@ The `docker-compose.yml` file defines services for the **consumer**, **simulator
 ```yaml
 version: '3.8'
 services:
+  simulator:
+    build:
+      context: ./simulator
+    ports:
+      - "8765:8765"
+    networks:
+      - app-network
+
   consumer:
-    build: ./consumer
+    build:
+      context: ./consumer
     ports:
       - "3000:3000"
-    environment:
-      - WEBSOCKET_URL=ws://simulator:8080
-
-  simulator:
-    build: ./simulator
-    ports:
-      - "8080:8080"
+    env_file:
+      - ./consumer/.env
+    depends_on:
+      - simulator
+    networks:
+      - app-network
 
   frontend:
-    build: ./frontend
+    build:
+      context: ./frontend
     ports:
       - "4000:4000"
+    env_file:
+      - ./frontend/.env
+    depends_on:
+      - consumer
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
 ```
+
 
 ---
 
@@ -196,9 +220,8 @@ consumer/
 
 simulator/
 ├── src/
-│   ├── events/             # Event generation logic
-│   ├── websocket/          # WebSocket server implementation
-│   ├── index.ts            # Application entry point
+│   ├── client.js/          # WebSocket POC implementation
+│   ├── simulator.js        # Application entry point
 
 frontend/
 ├── src/
