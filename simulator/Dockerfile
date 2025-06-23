@@ -2,11 +2,12 @@ FROM node:18
 
 WORKDIR /app
 
-COPY package.json package-lock.json ./
-RUN npm install
+COPY package.json yarn.lock ./
 
-COPY weather_stream_simulator.js ./
+RUN yarn install --frozen-lockfile
+
+COPY simulator.js ./
 
 EXPOSE 8765
 
-CMD ["node", "weather_stream_simulator.js"]
+CMD ["node", "simulator.js"]

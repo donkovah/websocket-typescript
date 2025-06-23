@@ -40,20 +40,7 @@ wss.on("connection", (ws) => {
           winddirection: weather.winddirection,
         };
 
-        // ws.send(JSON.stringify(event));
-
-        // Broadcast to all clients
-        wss.clients.forEach((client) => {
-          console.log(`Broadcasting to ${wss.clients.size} clients`);
-          if (client.readyState !== WebSocket.OPEN) {
-            console.log("❌ Client not open, skipping", client);
-            return;
-          }
-          console.log("📡 Sending event:", event);
-          if (client.readyState === WebSocket.OPEN) {
-            client.send(JSON.stringify(event));
-          }
-        });
+        ws.send(JSON.stringify(event));
       }
     } catch (err) {
       console.error("Error fetching weather data:", err.message);

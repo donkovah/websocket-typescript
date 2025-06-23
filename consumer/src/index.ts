@@ -10,7 +10,7 @@ async function start() {
   const wsClient = new WeatherStreamClient(AppConfig.websocket.url, aggregator);
 
   try {
-    await fastify.listen({ port: AppConfig.server.port });
+    await fastify.listen({ port: AppConfig.server.port, host: '0.0.0.0' });
     fastify.log.info(
       `Server listening on http://localhost:${AppConfig.server.port}`
     );

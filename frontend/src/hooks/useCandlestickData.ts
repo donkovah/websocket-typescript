@@ -9,8 +9,11 @@ const useCandlestickData = () => {
   const [error, setError] = useState<string | null>(null);
 
   const fetchCandlesticks = useCallback(async () => {
+    const candleStickUrl =
+      `${import.meta.env.VITE_CONSUMER_URL}candlesticks` ||
+      "http://localhost:3000/candlesticks";
     try {
-      const response = await axios.get<APIResponse>(`http://localhost:3000/candlesticks`);
+      const response = await axios.get<APIResponse>(candleStickUrl);
       const apiData = response.data;
       if (!apiData) {
         throw new Error("No data found for API response");

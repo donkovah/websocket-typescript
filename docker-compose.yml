@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  simulator:
+    build:
+      context: ./simulator
+    ports:
+      - "8765:8765"
+    networks:
+      - app-network
+
+  consumer:
+    build:
+      context: ./consumer
+    ports:
+      - "3030:3030"
+    env_file:
+      - ./consumer/.env
+    depends_on:
+      - simulator
+    networks:
+      - app-network
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "4000:4000"
+    env_file:
+      - ./frontend/.env
+    depends_on:
+      - consumer
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
