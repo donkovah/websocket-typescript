@@ -1,54 +1,141 @@
-# React + TypeScript + Vite
+# Climate Data Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
 
-Currently, two official plugins are available:
+The Climate Data Frontend is a React-based web application built with TypeScript and Vite. It visualizes candlestick data aggregated from weather events in real-time. The application integrates with the backend consumer API and provides an interactive and responsive user interface.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Real-Time Visualization**: Displays candlestick data in charts.
+- **Responsive Design**: Optimized for desktop and mobile devices.
+- **React + TypeScript**: Built with modern React and TypeScript for type safety.
+- **Integration with Consumer API**: Fetches and visualizes data from the backend.
+- **Custom Hooks**: Includes reusable hooks like `useCandlestickData` for fetching and managing data.
+- **Dockerized**: Easily deployable using Docker.
+
+---
+
+## Installation
+
+### Prerequisites
+- **Node.js**: Version 18 or higher.
+- **Yarn**: Package manager for JavaScript.
+
+### Steps
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-repo/climate-data-frontend.git
+   cd climate-data-frontend
+   ```
+
+2. Install dependencies:
+   ```bash
+   yarn install
+   ```
+
+3. Start the development server:
+   ```bash
+   yarn dev
+   ```
+
+---
+
+## Scripts
+
+- **Start Development Server**:
+  ```bash
+  yarn dev
+  ```
+- **Build Project**:
+  ```bash
+  yarn build
+  ```
+- **Preview Production Build**:
+  ```bash
+  yarn preview
+  ```
+- **Run Tests**:
+  ```bash
+  yarn test
+  ```
+- **Lint Code**:
+  ```bash
+  yarn lint
+  ```
+
+---
+
+## File Structure
+
+```
+src/
+├── components/         # React components
+├── hooks/              # Custom React hooks
+│   ├── useCandlestickData.ts  # Hook for fetching candlestick data
+├── util/               # Utility functions
+│   ├── flattenCandleStick.ts  # Function to format candlestick data
+├── App.tsx             # Main React application
+├── index.tsx           # Application entry point
+```
+
+---
+
+## API Integration
+
+The frontend fetches candlestick data from the backend consumer API. The API endpoint used is:
+
+- **GET** `/candlesticks`: Fetch aggregated candlestick data.
+
+---
+
+## Docker Usage
+
+### Build and Run Container
+1. Build the Docker image:
+   ```bash
+   docker build -t climate-frontend .
+   ```
+
+2. Run the container:
+   ```bash
+   docker run -p 4000:4000 climate-frontend
+   ```
+
+---
+
+## Development Notes
+
+### ESLint Configuration
+The project uses ESLint with type-aware rules for TypeScript. To expand the configuration, you can enable stricter rules:
 
 ```js
 export default tseslint.config({
   extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
     ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
     ...tseslint.configs.stylisticTypeChecked,
   ],
   languageOptions: {
-    // other options...
     parserOptions: {
       project: ['./tsconfig.node.json', './tsconfig.app.json'],
       tsconfigRootDir: import.meta.dirname,
     },
   },
-})
+});
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Testing
+The project uses Jest for unit testing. Example test files include:
+- `useCandlestickData.spec.ts`: Tests for the `useCandlestickData` hook.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+Run tests using:
+```bash
+yarn test
 ```
+
+---
+
+## License
+
+This project is licensed under the MIT License.
